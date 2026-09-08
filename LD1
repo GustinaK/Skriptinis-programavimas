@@ -1,0 +1,54 @@
+% Gustina Kairytė
+% Eef-25/2
+% 2026-09-08
+
+% Paprastas skriptas
+
+x = 1:32;
+y = x.^2;
+
+plot(x, y, 'o-r', x, y/3, 'xb')
+title('Dvi funkcijos')
+xlabel('X-ai')
+ylabel('F_1 [-o-]  |  F_2 [-x-]')
+
+%8 punktas
+
+help sin 
+doc sin
+docsearch sin
+
+help plot
+doc plot
+docsearch plot
+
+help title
+doc title
+docsearch title
+
+%9 punktas
+
+% LINSPACE elementų tolygus išdėstymas intervale
+% SIZE masyvo dydis (visų jo dimensijų dydžiai)
+% MAX leidžia surasti didžiausią reikšmę vektioriuje, matricoje ar masyve
+
+
+% Papildomos dalies užduotis
+
+%1
+N = 1; 
+
+%2
+vektorius = (N+1) : 0.5 : (N+4)
+
+%3
+A = [N N+1 N+2; N+3 N+4 N+5; N+6 N+7 N+8]
+
+%4
+rez_a = A(3, 2)
+rez_b = [A(2, 1), A(2, 2); A(3, 1), A(3, 2)]
+rez_c = [A(1,1), A(1,3); A(3,1), A(3,3)]
+
+%5
+vektorius_mod = vektorius(1: 3)'
+A_sujungta = [A, vektorius_mod]
