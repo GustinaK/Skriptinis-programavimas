@@ -1,0 +1,67 @@
+% Gustina Kairytė
+% Eef-25/2
+% 2026-09-08
+
+%1 uždavinys
+% a) 
+v1 = (-pi : 0.7 : 2*pi)'
+
+% b) 
+v2 = cos(v1)
+
+% c) 
+v3 = v1 .^ v2
+
+% d) 
+atsakymas_1 = v3'
+
+%2 uždavinys
+% a) 
+X = [exp(3), exp(-1/exp(1)), log(1); 
+    log(pi), -2, -sin(pi)]
+
+% b) 
+X_eil = [X(2,1)^2, X(1,3), X(2,3)^3]
+X_nauja = [X; X_eil]
+
+% c) 
+d = det(X_nauja)
+
+%3 užduotis
+
+A = 4; 
+f = 3; 
+sigma = 1; 
+U1 = 2.5; 
+U2 = 1.5;
+t = 0 : 0.001 : 1;
+s = A * sin(2*pi*f*t) + 0.5 * A * cos(4*pi*f*t);
+n = sigma * randn(size(t));
+
+sig = s + n;
+% a)
+atrinktos_reiksmes = sig(sig > U1);
+% b)
+filtruotas_sig = sig;
+filtruotas_sig(abs(filtruotas_sig) < U2) = 0;
+% c)
+dydis_nefiltruoto = length(sig)
+% d)
+dydis_atrinktu = length(atrinktos_reiksmes)
+% e)
+max_filtruotas = max(filtruotas_sig)
+min_filtruotas = min(filtruotas_sig)
+
+% papildomas užduotis
+
+A = input('Įveskite vektorių A: ');
+
+B = A(2:2:end);
+
+C = A(end - mod(end - 1, 2) : -2 : 1);
+
+disp('vektorius B yra:');
+disp(B);
+
+disp('vektorius C yra:');
+disp(C);
