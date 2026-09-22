@@ -1,0 +1,148 @@
+% Gustina Kairytė
+% EEf-25/2
+% 2026-09-22
+
+%1 Dvimatis grafiku vaizdavimas
+%a)
+x1 = -pi : 0.1 : pi;
+f1 = sin(x1);
+
+figure(1); 
+plot(x1, f1, 'LineWidth', 5);
+axis([-pi, pi, -1.2, 1.2]); 
+
+title('Funkcija f(x) = sin(x)');
+xlabel('x asis');
+ylabel('y asis');
+grid on; 
+legend('f(x) = sin(x)', 'Location', 'best');
+
+ax = gca;
+ax.XTick = -pi : pi/4 : pi;
+ax.XTickLabel = {'-\pi', '-3\pi/4', '-\pi/2', '-\pi/4', '0', '\pi/4', '\pi/2', '3\pi/4', '\pi'};
+
+%b)
+x2 = -pi : 0.1 : pi; 
+f2_1 = 2 * sin(x2) .* cos(x2);
+f2_2 = 3 * sin(x2) .* cos(x2);
+
+figure(2); 
+plot(x2, f2_1, x2, f2_2, 'LineWidth', 5); 
+
+axis([-pi, pi, -1.7, 1.7]);
+
+title('Funkcijos f(x) = 2sin(x)cos(x) ir f(x) = 3sin(x)cos(x)');
+xlabel('x asis');
+ylabel('y asis');
+grid on;
+legend('f(x) = 2sin(x)cos(x)', 'f(x) = 3sin(x)cos(x)', 'Location', 'best');
+
+ax2 = gca;
+ax2.XTick = -pi : pi/4 : pi;
+ax2.XTickLabel = {'-\pi', '-3\pi/4', '-\pi/2', '-\pi/4', '0', '\pi/4', '\pi/2', '3\pi/4', '\pi'};
+
+
+%2 Specializuotu grafiku kurimas
+%a) Trimatis grafikas
+t = 0 : pi/20 : 4*pi;
+
+x_t = sin(t);
+y_t = cos(t);
+z_t = tan(t);
+
+figure(3); 
+plot3(x_t, y_t, z_t, '-o', 'LineWidth', 1.5);
+title('3D parametrine kreive');
+xlabel('x = sin(t)');
+ylabel('y = cos(t)');
+zlabel('z = tan(t)');
+grid on;
+
+% PAPILDOMA
+
+% 3 uzd. is 2 lab
+rng(42)
+A = 4;
+f = 3;
+sigma = 1;
+U1 = 2.5;
+U2 = 1.5;
+t = 0 : 0.001 : 1;
+s = A * sin(2*pi*f*t) + 0.5 * A * cos(4*pi*f*t);
+n = sigma * randn(size(t));
+
+sig = s + n;
+
+%a)
+atrinktos_reiksmes = sig(sig > U1);
+
+%b)
+filtruotas_sig = sig;
+filtruotas_sig(abs(filtruotas_sig) < U2) = 0;
+
+%c)
+dydis_nefiltruoto = length(sig);
+
+%d)
+dydis_atrinktu = length(atrinktos_reiksmes);
+
+%e)
+max_filtruotas = max(filtruotas_sig);
+min_filtruotas = min(filtruotas_sig);
+
+% Signalų grafinis atvaizdavimas
+
+figure('Name', 'Signalų grafinis atvaizdavimas', 'Color', 'w');
+
+%a) pradinis ir filtruotas signalas bei ribos
+
+subplot(2, 1, 1);
+hold on;
+p1 = plot(t, sig, 'b-', 'LineWidth', 1.5); 
+p2 = plot(t, filtruotas_sig, 'Color', [0.5, 0, 0.5], 'LineWidth', 1.5); 
+
+p3 = yline(U1, 'k:', 'LineWidth', 1.25); 
+
+p4 = yline(U2, 'k-', 'LineWidth', 1.0); 
+
+hold off;
+title('Pradinis ir filtruotas signalai bei filtravimo ribos');
+xlabel('Laikas (s)');
+ylabel('Įtampa (V)');
+grid on; 
+xlim([min(t) max(t)]);
+ylim([min(sig)-1, max(sig)+1]);
+
+legend([p1, p2, p3, p4], {'Pradinis signalas', 'Filtruotas signalas', 'Riba U_1', 'Riba U_2'}, ...
+       'Location', 'southeast');
+
+
+%b) reikšmės, viršijančios U1 ribą
+subplot(2, 1, 2);
+hold on;
+
+t_virs = t(sig > U1);
+
+p_stem = stem(t_virs, atrinktos_reiksmes, 'b', 'Marker', 'o', 'MarkerFaceColor', 'b');
+
+[max_val, max_idx] = max(atrinktos_reiksmes);
+[min_val, min_idx] = min(atrinktos_reiksmes);
+
+p_max = plot(t_virs(max_idx), max_val, 'Marker', 'd', 'MarkerSize', 9, ...
+             'MarkerEdgeColor', 'g', 'MarkerFaceColor', 'g', 'LineStyle', 'none');
+
+p_min = plot(t_virs(min_idx), min_val, 'Marker', 'd', 'MarkerSize', 9, ...
+             'MarkerEdgeColor', 'r', 'MarkerFaceColor', 'r', 'LineStyle', 'none');
+
+hold off;
+
+title('Pradinio signalo reikšmės, viršijančios U_1 ribą');
+xlabel('Laikas (s)');
+ylabel('Įtampa (V)');
+grid on; 
+xlim([min(t) max(t)]);
+if ~isempty(atrinktos_reiksmes)
+    ylim([U1 - 0.5, max(atrinktos_reiksmes) + 1]);
+end
+legend([p_stem, p_max, p_min], {'Reikšmės > U_1', 'Maksimali reikšmė', 'Minimali reikšmė'}, ...
+       'Location', 'southeast');
